@@ -1,9 +1,13 @@
 
 
-  $(document).ready(function () {
-    serashByName("");
+   $(document).ready(() => {
+    searchByName("").then(() => {
+      $(".loading-screen").fadeOut(500);
+      $("body").css("overflow", "visible");
+      $('body').css('overflow', 'auto')
+      $('.loading-screen').css('zIndex', '99');
+    });
   });
-
 
 // ----------------Side Bar-------
 let closeIcon = $(".close-open");
@@ -11,7 +15,7 @@ let linksInnerWidth = $(".nav-tab").innerWidth();
 $(".side-nav-menu").css('left', -linksInnerWidth);
 function openSideBar(){
     $(".side-nav-menu").animate({left: '0px'}, 500)
-    closeIcon.html(' <i class="fas s fa-close fa-2x"></i> ');
+    closeIcon.html(` <i class="fas fa-close fa-2x text-black"></i>    `);
     for (let i = 0; i < 5; i++) {
         $(".links li").eq(i).animate({
             top: 0
@@ -113,21 +117,27 @@ $('.search-link').click(function (e) {
     $("#searchContainer").css("display", "block");
 });
 // --------Search Meals by Name
-async function serashByName(name){
-    let nameRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`);
+async function searchByName(name){
+  $('.loading-screen').fadeIn(500);
+   let nameRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`);
    let nameResponse = await nameRequest.json();
    viewMeals(nameResponse) ;
+   $('.loading-screen').fadeOut(500);
+
 }
 $('#nameSearch').keyup(function (e) { 
-    serashByName(this.value);
-    console.log(this.value);
-});
+  searchByName(this.value);
+   });
 
 // Search Meals by Letter
 async function serashByLetter(letter){
+  $('.loading-screen').fadeIn(300);
+
     let letterRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`);
    let letterResponse = await letterRequest.json();
    viewMeals(letterResponse) ;
+   $('.loading-screen').fadeOut(300);
+
 }
 $('#letterSearch').keyup(function (e) { 
     serashByLetter(this.value);
@@ -136,7 +146,8 @@ $('#letterSearch').keyup(function (e) {
 
 // Display All Categories
 async function dispalyCategories( categories){
-   
+  $('.loading-screen').fadeIn(300);
+
     let htmlContent ="";
     let len =0;
     if (categories.length> 20){
@@ -159,6 +170,8 @@ async function dispalyCategories( categories){
        
     }
     $(".meals-displayed").html(htmlContent);
+    $('.loading-screen').fadeOut(300);
+
 }
 async function getCategories(){
     let categories = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php `);
@@ -171,6 +184,8 @@ $('.categories').click(function (e) {
     getCategories();    
 });
 async function viewMealsPerCategory(category){
+  $('.loading-screen').fadeIn(300);
+
     const mealsCategory = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
     const  mealsCategoryResponse = await mealsCategory.json();
     let htmlContent ="";
@@ -195,6 +210,8 @@ async function viewMealsPerCategory(category){
        
     }
     $(".meals-displayed").html(htmlContent);
+    $('.loading-screen').fadeOut(300);
+
 }
 
 
@@ -202,7 +219,8 @@ async function viewMealsPerCategory(category){
 
 // Display All Areas
 async function dispalyAreas( areas){
-   
+  $('.loading-screen').fadeIn(300);
+
     let htmlContent ="";
     let len =0;
     if (areas.length> 20){
@@ -222,6 +240,8 @@ async function dispalyAreas( areas){
        
     }
     $(".meals-displayed").html(htmlContent);
+    $('.loading-screen').fadeOut(300);
+
 }
 async function getAreas(){
     let areasRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/list.php?a=list`);
@@ -233,6 +253,8 @@ $('.areas').click(function (e) {
     getAreas();    
 });
 async function viewMealsPerArea(area){
+  $('.loading-screen').fadeIn(300);
+
     const mealsArea = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area} `)
     const  mealsAreasResponse = await mealsArea.json();
     let htmlContent ="";
@@ -257,12 +279,15 @@ async function viewMealsPerArea(area){
        
     }
     $(".meals-displayed").html(htmlContent);
+    $('.loading-screen').fadeOut(300);
+
 }
 
 
 // Display All Ingredients
 async function dispalyIngredients( ingredients){
-   
+  $('.loading-screen').fadeIn(300);
+
     let htmlContent ="";
     let len =0;
     if (ingredients.length> 20){
@@ -284,6 +309,8 @@ async function dispalyIngredients( ingredients){
        
     }
     $(".meals-displayed").html(htmlContent);
+    $('.loading-screen').fadeOut(300);
+
 }
 async function getIngredients(){
     let ingRequest = await fetch(`https://www.themealdb.com/api/json/v1/1/list.php?i=list`);
@@ -295,6 +322,8 @@ $('.ingredients').click(function (e) {
     getIngredients();    
 });
 async function getMealsPerIngredient(ingredient){
+  $('.loading-screen').fadeIn(300);
+
     const ingredientReq = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}
     `)
     const  ingredientResponse = await ingredientReq.json();
@@ -320,6 +349,8 @@ async function getMealsPerIngredient(ingredient){
        
     }
     $(".meals-displayed").html(htmlContent);
+    $('.loading-screen').fadeOut(300);
+
 }
 
 
