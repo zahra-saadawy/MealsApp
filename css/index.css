@@ -1,5 +1,12 @@
 body{
     background-color: #0D0D0D;
+    overflow: hidden;
+}
+.loading-screen{
+    background-color: #0D0D0D;
+    z-index: 9999999;
+    color: white;
+    display: flex;
 }
 .nav-header{
     width: 21%;
@@ -20,12 +27,10 @@ body{
 .meal:hover .meal-layer{
     top: 0;
 }
-/* .loading-screen {
-    display: none;
-} */
+
 .side-nav-menu{
     background-color: #0D0D0D;
-    z-index: 99999;
+    z-index: 999;
 }
 .logo {
     width: 50px;
